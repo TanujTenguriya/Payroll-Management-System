@@ -19,31 +19,66 @@ export default function MyAttendance() {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold mb-4">My Attendance</h2>
+      <h2
+        className="
+          text-3xl font-extrabold mb-6 
+          bg-gradient-to-r from-purple-300 to-blue-300 
+          text-transparent bg-clip-text
+        "
+      >
+        My Attendance
+      </h2>
 
+      {/* No Records */}
       {records.length === 0 ? (
-        <p className="text-gray-500">No attendance records found.</p>
+        <p
+          className="
+            text-white/80 text-lg 
+            bg-white/10 backdrop-blur-lg p-6 rounded-xl 
+            border border-white/20 shadow-xl
+            animate-fadeIn
+          "
+        >
+          No attendance records found.
+        </p>
       ) : (
-        <table className="w-full bg-white shadow rounded">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="p-2">Month</th>
-              <th>Working Days</th>
-              <th>Present</th>
-              <th>Absent</th>
-            </tr>
-          </thead>
-          <tbody>
-            {records.map(a => (
-              <tr key={a._id} className="border-t text-center">
-                <td className="p-2">{a.month}</td>
-                <td>{a.workingDays}</td>
-                <td>{a.presentDays}</td>
-                <td>{a.workingDays - a.presentDays}</td>
+        <div
+          className="
+            overflow-x-auto 
+            bg-white/10 backdrop-blur-xl 
+            border border-white/20 rounded-xl 
+            shadow-xl animate-fadeIn
+          "
+        >
+          <table className="w-full text-white">
+            <thead className="bg-white/10 border-b border-white/20">
+              <tr>
+                <th className="table-header">Month</th>
+                <th className="table-header">Working Days</th>
+                <th className="table-header">Present</th>
+                <th className="table-header">Absent</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {records.map((a) => (
+                <tr
+                  key={a._id}
+                  className="
+                    border-t border-white/10 
+                    hover:bg-white/10 
+                    transition-all text-center
+                  "
+                >
+                  <td className="table-cell">{a.month}</td>
+                  <td className="table-cell">{a.workingDays}</td>
+                  <td className="table-cell">{a.presentDays}</td>
+                  <td className="table-cell">{a.workingDays - a.presentDays}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </Layout>
   );

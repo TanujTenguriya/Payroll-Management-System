@@ -21,59 +21,95 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-emerald-500 to-teal-600">
+    <div className="min-h-screen flex justify-center items-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-blue-800">
+
+      {/* Floating Blobs */}
+      <div className="absolute w-[30rem] h-[30rem] bg-purple-500/30 blur-[150px] top-10 left-10 animate-pulse"></div>
+      <div className="absolute w-[28rem] h-[28rem] bg-blue-500/20 blur-[120px] bottom-10 right-10 animate-bounce"></div>
+
+      {/* REGISTER CARD */}
       <form
         onSubmit={handleRegister}
-        className="bg-white p-8 rounded-lg shadow-lg w-96"
+        className="
+          relative z-10 w-96 
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          p-10 rounded-2xl shadow-2xl 
+          animate-fadeIn
+        "
       >
-        <h2 className="text-2xl font-bold text-center mb-6">
+        {/* Title */}
+        <h2
+          className="
+            text-3xl font-extrabold text-center mb-8 
+            bg-gradient-to-r from-purple-300 to-blue-300 
+            text-transparent bg-clip-text
+          "
+        >
           Register User
         </h2>
 
+        {/* Name */}
         <input
           type="text"
           placeholder="Full Name"
-          className="w-full p-2 border rounded mb-3"
+          className="glass-input mb-4"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
 
+        {/* Email */}
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 border rounded mb-3"
+          className="glass-input mb-4"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
+        {/* Role */}
         <select
-          className="w-full p-2 border rounded mb-3"
+          className="
+            glass-input mb-4 
+            bg-white/20 text-white rounded-lg
+          "
           value={role}
           onChange={(e) => setRole(e.target.value)}
         >
-          <option value="admin">Admin</option>
-          <option value="accountant">Accountant</option>
-          <option value="employee">Employee</option>
+          <option className="text-black" value="admin">Admin</option>
+          <option className="text-black" value="accountant">Accountant</option>
+          <option className="text-black" value="employee">Employee</option>
         </select>
 
+        {/* Password */}
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 border rounded mb-4"
+          className="glass-input mb-6"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded mb-3">
+        {/* Register Button */}
+        <button
+          className="
+            w-full py-3 
+            bg-gradient-to-r from-purple-500 to-indigo-600 
+            hover:scale-105 hover:opacity-90 
+            text-white rounded-lg font-semibold 
+            transition-all duration-300 shadow-lg shadow-purple-500/30
+          "
+        >
           Register
         </button>
 
-        <p className="text-sm text-center">
+        {/* Login Link */}
+        <p className="text-sm text-center text-white/80 mt-4">
           Already have an account?{" "}
-          <Link to="/login" className="text-emerald-600 font-semibold">
+          <Link to="/login" className="text-purple-300 font-semibold hover:underline">
             Login
           </Link>
         </p>

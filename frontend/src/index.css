@@ -6,3 +6,12 @@
 .title {
   @apply text-lg font-bold mb-2;
 }
+
+.table-header {
+  @apply p-3 text-left font-semibold text-purple-200;
+}
+
+.table-cell {
+  @apply p-3 text-white/90;
+}
+

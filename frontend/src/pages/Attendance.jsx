@@ -31,64 +31,110 @@ export default function Attendance() {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold mb-4">Attendance</h2>
+      <h2
+        className="
+          text-3xl font-extrabold mb-6 
+          bg-gradient-to-r from-purple-300 to-blue-300 
+          text-transparent bg-clip-text
+        "
+      >
+        Attendance
+      </h2>
 
-      <div className="bg-white p-6 shadow rounded max-w-md grid gap-4">
-
+      <div
+        className="
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          shadow-xl rounded-2xl 
+          p-8 max-w-md 
+          grid gap-5 
+          animate-fadeIn
+        "
+      >
+        {/* Employee Email */}
         <div>
-          <label className="font-semibold">Employee Email</label>
+          <label className="font-semibold text-white/90">Employee Email</label>
           <input
             type="email"
             name="employee"
             placeholder="employee@gmail.com"
-            className="border p-2 rounded w-full"
+            className="
+              w-full p-3 rounded-lg bg-white/20 text-white 
+              border border-white/30 
+              focus:outline-none focus:ring-2 focus:ring-purple-400 
+              transition-all
+            "
             value={form.employee}
             onChange={change}
           />
         </div>
 
+        {/* Month */}
         <div>
-          <label className="font-semibold">Month</label>
+          <label className="font-semibold text-white/90">Month</label>
           <input
             type="month"
             name="month"
-            className="border p-2 rounded w-full"
+            className="
+              w-full p-3 rounded-lg bg-white/20 text-white 
+              border border-white/30 
+              focus:outline-none focus:ring-2 focus:ring-purple-400 
+              transition-all
+            "
             value={form.month}
             onChange={change}
           />
         </div>
 
+        {/* Working Days */}
         <div>
-          <label className="font-semibold">Working Days</label>
+          <label className="font-semibold text-white/90">Working Days</label>
           <input
             type="number"
             name="workingDays"
             placeholder="30"
-            className="border p-2 rounded w-full"
+            className="
+              w-full p-3 rounded-lg bg-white/20 text-white 
+              border border-white/30 
+              focus:outline-none focus:ring-2 focus:ring-purple-400 
+              transition-all
+            "
             value={form.workingDays}
             onChange={change}
           />
         </div>
 
+        {/* Present Days */}
         <div>
-          <label className="font-semibold">Present Days</label>
+          <label className="font-semibold text-white/90">Present Days</label>
           <input
             type="number"
             name="presentDays"
             placeholder="26"
-            className="border p-2 rounded w-full"
+            className="
+              w-full p-3 rounded-lg bg-white/20 text-white 
+              border border-white/30 
+              focus:outline-none focus:ring-2 focus:ring-purple-400 
+              transition-all
+            "
             value={form.presentDays}
             onChange={change}
           />
         </div>
 
+        {/* Save Button */}
         <button
           onClick={submit}
-          className="bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700"
+          className="
+            bg-gradient-to-r from-purple-500 to-indigo-600 
+            text-white font-semibold py-3 rounded-lg 
+            hover:opacity-90 hover:scale-105 
+            transition-all duration-300 
+            shadow-lg shadow-purple-500/30
+          "
         >
           Save Attendance
         </button>
-
       </div>
     </Layout>
   );

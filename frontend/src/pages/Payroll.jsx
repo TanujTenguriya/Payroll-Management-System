@@ -20,53 +20,102 @@ export default function Payroll() {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold mb-4">Generate Payroll</h2>
+      {/* Title */}
+      <h2
+        className="
+          text-3xl font-extrabold mb-6 
+          bg-gradient-to-r from-purple-300 to-blue-300 
+          text-transparent bg-clip-text
+        "
+      >
+        Generate Payroll
+      </h2>
 
-      <div className="bg-white p-6 shadow rounded max-w-lg mb-6">
+      {/* Payroll Input Card */}
+      <div
+        className="
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          shadow-xl rounded-xl 
+          p-6 max-w-lg mb-10 
+          animate-fadeIn
+        "
+      >
         <input
           type="month"
-          className="border p-2 w-full rounded mb-3"
+          className="
+            glass-input mb-4
+          "
           value={month}
-          onChange={e => setMonth(e.target.value)}
+          onChange={(e) => setMonth(e.target.value)}
         />
 
         <button
           onClick={generate}
-          className="bg-green-600 hover:bg-green-700 text-white p-2 w-full rounded"
+          className="
+            w-full py-3 
+            bg-gradient-to-r from-green-500 to-green-600 
+            hover:opacity-90 hover:scale-105 
+            text-white font-semibold rounded-lg 
+            shadow-lg shadow-green-500/30
+            transition-all duration-300
+          "
         >
           Generate Payroll
         </button>
       </div>
 
+      {/* Payroll Table */}
       {payrolls.length > 0 && (
-        <div className="bg-white p-6 shadow rounded max-w-3xl">
-          <h3 className="font-semibold mb-3">Generated Payroll</h3>
+        <div
+          className="
+            bg-white/10 backdrop-blur-xl 
+            border border-white/20 
+            shadow-xl rounded-xl 
+            p-6 max-w-4xl 
+            animate-fadeIn
+          "
+        >
+          <h3 className="text-xl font-bold text-purple-200 mb-4">
+            Generated Payroll
+          </h3>
 
-          <table className="w-full">
-            <thead className="bg-slate-200">
-              <tr>
-                <th className="p-2 text-left">Employee</th>
-                <th>Month</th>
-                <th>Gross</th>
-                <th>Deductions</th>
-                <th>Net Salary</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payrolls.map(p => (
-                <tr key={p._id} className="border-t">
-                  <td className="p-2">{p.employee?.name || "N/A"}</td>
-                  <td>{p.month}</td>
-                  <td>₹{p.grossSalary}</td>
-                  <td>₹{p.deductions}</td>
-                  <td className="font-semibold text-green-600">₹{p.netSalary}</td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-white">
+              <thead className="bg-white/10 border-b border-white/20">
+                <tr>
+                  <th className="table-header">Employee</th>
+                  <th className="table-header">Month</th>
+                  <th className="table-header">Gross</th>
+                  <th className="table-header">Deductions</th>
+                  <th className="table-header">Net Salary</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {payrolls.map((p) => (
+                  <tr
+                    key={p._id}
+                    className="
+                      border-t border-white/10 
+                      hover:bg-white/10 
+                      transition-all text-center
+                    "
+                  >
+                    <td className="table-cell">{p.employee?.name || "N/A"}</td>
+                    <td className="table-cell">{p.month}</td>
+                    <td className="table-cell">₹{p.grossSalary}</td>
+                    <td className="table-cell">₹{p.deductions}</td>
+                    <td className="table-cell font-semibold text-green-300">
+                      ₹{p.netSalary}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
-
     </Layout>
   );
 }

@@ -37,26 +37,44 @@ export default function Salary() {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold mb-5">Salary Structure</h2>
+      {/* Title */}
+      <h2
+        className="
+          text-3xl font-extrabold mb-6 
+          bg-gradient-to-r from-purple-300 to-blue-300 
+          text-transparent bg-clip-text
+        "
+      >
+        Salary Structure
+      </h2>
 
-      <div className="bg-white p-6 shadow rounded max-w-md grid gap-4">
-
-        <label className="text-sm font-semibold">Employee Email</label>
-        <input
-          type="email"
-          name="employee"
-          className="border p-2 rounded w-full"
-          placeholder="employee@gmail.com"
-          value={form.employee}
-          onChange={change}
-        />
+      {/* Glassmorphic Form */}
+      <div
+        className="
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          shadow-xl rounded-xl p-8 max-w-lg 
+          grid gap-5 animate-fadeIn
+        "
+      >
+        <div>
+          <label className="text-sm font-semibold text-white/80">Employee Email</label>
+          <input
+            type="email"
+            name="employee"
+            className="glass-input mt-1"
+            placeholder="employee@gmail.com"
+            value={form.employee}
+            onChange={change}
+          />
+        </div>
 
         <div>
-          <label className="text-sm font-semibold">Basic Salary</label>
+          <label className="text-sm font-semibold text-white/80">Basic Salary</label>
           <input
             type="number"
             name="basic"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="30000"
             value={form.basic}
             onChange={change}
@@ -64,11 +82,13 @@ export default function Salary() {
         </div>
 
         <div>
-          <label className="text-sm font-semibold">House Rent Allowance (HRA)</label>
+          <label className="text-sm font-semibold text-white/80">
+            House Rent Allowance (HRA)
+          </label>
           <input
             type="number"
             name="hra"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="8000"
             value={form.hra}
             onChange={change}
@@ -76,11 +96,13 @@ export default function Salary() {
         </div>
 
         <div>
-          <label className="text-sm font-semibold">Dearness Allowance (DA)</label>
+          <label className="text-sm font-semibold text-white/80">
+            Dearness Allowance (DA)
+          </label>
           <input
             type="number"
             name="da"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="3000"
             value={form.da}
             onChange={change}
@@ -88,11 +110,11 @@ export default function Salary() {
         </div>
 
         <div>
-          <label className="text-sm font-semibold">Other Allowances</label>
+          <label className="text-sm font-semibold text-white/80">Other Allowances</label>
           <input
             type="number"
             name="otherAllowances"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="2000"
             value={form.otherAllowances}
             onChange={change}
@@ -100,11 +122,11 @@ export default function Salary() {
         </div>
 
         <div>
-          <label className="text-sm font-semibold">PF Deduction (%)</label>
+          <label className="text-sm font-semibold text-white/80">PF Deduction (%)</label>
           <input
             type="number"
             name="pfRate"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="12"
             value={form.pfRate}
             onChange={change}
@@ -112,20 +134,28 @@ export default function Salary() {
         </div>
 
         <div>
-          <label className="text-sm font-semibold">Tax (%)</label>
+          <label className="text-sm font-semibold text-white/80">Tax (%)</label>
           <input
             type="number"
             name="taxRate"
-            className="border p-2 rounded w-full"
+            className="glass-input mt-1"
             placeholder="5"
             value={form.taxRate}
             onChange={change}
           />
         </div>
 
+        {/* Submit Button */}
         <button
           onClick={submit}
-          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="
+            w-full py-3 
+            bg-gradient-to-r from-blue-500 to-indigo-600 
+            hover:scale-105 hover:opacity-90 
+            text-white rounded-lg font-semibold 
+            transition-all duration-300 
+            shadow-lg shadow-blue-500/30
+          "
         >
           Save Salary
         </button>

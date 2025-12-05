@@ -37,37 +37,77 @@ export default function Payslip() {
 
   return (
     <Layout>
-      <h2 className="text-xl font-bold mb-4">Payslip</h2>
+      {/* Title */}
+      <h2
+        className="
+          text-3xl font-extrabold mb-6 
+          bg-gradient-to-r from-purple-300 to-blue-300 
+          text-transparent bg-clip-text
+        "
+      >
+        Payslip
+      </h2>
 
-      <div className="bg-white p-6 shadow rounded max-w-md mb-6">
-
+      {/* Fetch Payslip Form */}
+      <div
+        className="
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          shadow-xl rounded-xl 
+          p-6 max-w-md mb-10 
+          animate-fadeIn
+        "
+      >
         <input
           type="month"
-          className="border p-2 rounded w-full mb-3"
+          className="glass-input mb-4"
           value={month}
           onChange={(e) => setMonth(e.target.value)}
         />
 
         <button
           onClick={fetchPayslip}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 w-full rounded"
+          className="
+            w-full py-3 
+            bg-gradient-to-r from-indigo-500 to-indigo-600 
+            hover:scale-105 hover:opacity-90 
+            text-white rounded-lg font-semibold 
+            transition-all duration-300 shadow-lg shadow-indigo-500/30
+          "
         >
           Fetch Payslip
         </button>
       </div>
 
+      {/* Payslip Data */}
       {data && (
-        <div className="bg-white p-6 shadow rounded max-w-md">
-          <p><b>Name:</b> {data.employee.name}</p>
-          <p><b>Code:</b> {data.employee.empCode}</p>
-          <p><b>Month:</b> {data.month}</p>
-          <p><b>Gross Salary:</b> ₹{data.grossSalary}</p>
-          <p><b>Deductions:</b> ₹{data.deductions}</p>
-          <p><b>Net Salary:</b> ₹{data.netSalary}</p>
+        <div
+          className="
+            bg-white/10 backdrop-blur-xl 
+            border border-white/20 
+            shadow-xl rounded-xl 
+            p-8 max-w-md animate-fadeIn
+          "
+        >
+          <p className="text-white/90"><b>Name:</b> {data.employee.name}</p>
+          <p className="text-white/90"><b>Code:</b> {data.employee.empCode}</p>
+          <p className="text-white/90"><b>Month:</b> {data.month}</p>
+          <p className="text-white/90"><b>Gross Salary:</b> ₹{data.grossSalary}</p>
+          <p className="text-white/90"><b>Deductions:</b> ₹{data.deductions}</p>
+          <p className="text-white font-semibold text-green-300">
+            <b>Net Salary:</b> ₹{data.netSalary}
+          </p>
 
+          {/* Download Button */}
           <button
             onClick={downloadPDF}
-            className="mt-4 bg-red-600 hover:bg-red-700 text-white p-2 rounded w-full"
+            className="
+              mt-6 w-full py-3 
+              bg-gradient-to-r from-red-500 to-red-600 
+              hover:scale-105 hover:opacity-90 
+              text-white rounded-lg font-semibold 
+              transition-all duration-300 shadow-lg shadow-red-500/30
+            "
           >
             Download PDF
           </button>
