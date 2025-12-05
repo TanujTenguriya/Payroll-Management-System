@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const employeeSchema = new mongoose.Schema({
   empCode: {
     type: String,
-    required: true,
     unique: true
   },
   name: {
@@ -36,4 +35,11 @@ const employeeSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export default mongoose.model("Employee", employeeSchema);
+employeeSchema.pre("validate", function (next) {
+  if (!this.empCode) {
+    this.empCode = "EMP" + Math.floor(100000 + Math.random() * 900000);
+  }
+});
+
+const Employee = mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
+export default Employee;

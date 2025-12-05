@@ -1,32 +1,48 @@
 import Employee from "../models/employee.model.js";
+import User from "../models/User.model.js";
 
-/* Create employee */
 export const createEmployee = async (req, res) => {
-  const employee = await Employee.create(req.body);
-  res.status(201).json(employee);
+  try {
+    const { email, name, department, designation, dateOfJoining, bankAccount, ifscCode } = req.body;
+
+    // find user by email
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not registered" });
+
+    // prevent duplicate employee creation
+    const exists = await Employee.findOne({ user: user._id });
+    if (exists) return res.status(400).json({ message: "Employee already exists" });
+
+    const emp = new Employee({
+      user: user._id,
+      name,
+      department,
+      designation,
+      dateOfJoining,
+      bankAccount,
+      ifscCode
+    });
+
+    await emp.save();
+
+    res.status(201).json(emp);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
-/* Get all employees */
+/* GET ALL EMPLOYEES (ADMIN VIEW) */
 export const getEmployees = async (req, res) => {
-  const employees = await Employee.find().populate("user", "-password");
+  const employees = await Employee.find().populate("user", "email");
   res.json(employees);
 };
 
-/* Get single employee */
-export const getEmployee = async (req, res) => {
-  const employee = await Employee.findById(req.params.id);
-  if (!employee) return res.status(404).json({ message: "Employee not found" });
-  res.json(employee);
-};
+/* GET LOGGED-IN USER EMPLOYEE PROFILE */
+export const getMyEmployee = async (req, res) => {
+  const employee = await Employee.findOne({ user: req.user._id });
 
-/* Update */
-export const updateEmployee = async (req, res) => {
-  const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(employee);
-};
+  if (!employee) return res.json(null);
 
-/* Delete */
-export const deleteEmployee = async (req, res) => {
-  await Employee.findByIdAndDelete(req.params.id);
-  res.json({ message: "Employee deleted" });
+  res.json(employee);
 };

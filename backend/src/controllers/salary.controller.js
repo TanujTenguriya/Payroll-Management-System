@@ -1,18 +1,62 @@
-import SalaryStructure from "../models/salaryStructure.model.js";
+import User from "../models/User.model.js";
+import Salary from "../models/salaryStructure.model.js";
+import Employee from "../models/employee.model.js";
 
-/* Create/Update salary */
+    // SET OR UPDATE SALARY
 export const setSalary = async (req, res) => {
-  const salary = await SalaryStructure.findOneAndUpdate(
-    { employee: req.body.employee },
-    req.body,
-    { new: true, upsert: true }
-  );
+  try {
+    const { employee, basic, hra, da, otherAllowances, pfRate, taxRate } = req.body;
 
-  res.json(salary);
+    // USER LOOKUP FIRST
+    const user = await User.findOne({ email: employee });
+    if (!user) {
+      return res.status(404).json({ message: "User email not found" });
+    }
+
+    // EMPLOYEE LOOKUP NEXT
+    const emp = await Employee.findOne({ user: user._id });
+    if (!emp) {
+      return res.status(404).json({ message: "Employee not created for this email" });
+    }
+
+    const salary = await Salary.findOneAndUpdate(
+      { employee: emp._id },
+      {
+        employee: emp._id,
+        basic,
+        hra,
+        da,
+        otherAllowances,
+        pfRate,
+        taxRate
+      },
+      { upsert: true, new: true }
+    );
+
+    res.json(salary);
+
+  } catch (err) {
+    console.error("SALARY ERROR:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-/* Get salary for employee */
 export const getSalary = async (req, res) => {
-  const salary = await SalaryStructure.findOne({ employee: req.params.empId });
+  const { empId } = req.params;
+
+  let emp;
+
+  if (empId.length < 24) {
+    emp = await Employee.findOne({ empCode: empId });
+  } else {
+    emp = await Employee.findById(empId);
+  }
+
+  if (!emp) return res.status(404).json({ message: "Employee not found" });
+
+  const salary = await Salary.findOne({ employee: emp._id }).populate("employee");
+
+  if (!salary) return res.status(404).json({ message: "Salary not set" });
+
   res.json(salary);
 };

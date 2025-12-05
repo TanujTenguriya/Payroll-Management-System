@@ -8,7 +8,6 @@ import payrollRoutes from "./payroll.routes.js";
 
 const router = express.Router();
 
-// Mount all routes here
 router.use("/auth", authRoutes);
 router.use("/employees", employeeRoutes);
 router.use("/salary", salaryRoutes);

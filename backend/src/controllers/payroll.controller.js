@@ -1,46 +1,76 @@
-import Payroll from "../models/payroll.model.js";
 import Employee from "../models/employee.model.js";
-import SalaryStructure from "../models/salaryStructure.model.js";
+import Payroll from "../models/payroll.model.js";
 import Attendance from "../models/attendance.model.js";
+import Salary from "../models/salaryStructure.model.js";
 
-/* Generate payroll */
+/* GENERATE PAYROLL FOR ALL EMPLOYEES */
 export const generatePayroll = async (req, res) => {
   const { month } = req.params;
+
   const employees = await Employee.find();
-  let result = [];
+
+  let generated = [];
 
   for (const emp of employees) {
-    const salary = await SalaryStructure.findOne({ employee: emp._id });
-    if (!salary) continue;
-
+    const salary = await Salary.findOne({ employee: emp._id });
     const attendance = await Attendance.findOne({ employee: emp._id, month });
-    const workingDays = attendance?.workingDays || 30;
-    const present = attendance?.presentDays || workingDays;
 
-    const BASIC = (salary.basic * present) / workingDays;
-    const gross = BASIC + salary.hra + salary.da + salary.otherAllowances;
+    if (!salary || !attendance) continue;
 
-    const pf = (salary.pfRate / 100) * BASIC;
+    const gross = salary.basic + salary.hra + salary.da + salary.otherAllowances;
+    const pf = (salary.pfRate / 100) * salary.basic;
     const tax = (salary.taxRate / 100) * gross;
-    const deductions = pf + tax;
 
-    const net = gross - deductions;
+    const netSalary = gross - pf - tax;
 
     const payroll = await Payroll.findOneAndUpdate(
       { employee: emp._id, month },
-      { grossSalary: gross, totalDeductions: deductions, netSalary: net },
-      { new: true, upsert: true }
+      {
+        employee: emp._id,
+        month,
+        grossSalary: gross,
+        totalDeductions: pf + tax,  
+        netSalary
+      },
+      { upsert: true, new: true }
     );
 
-    result.push(payroll);
+    generated.push(payroll);
   }
 
-  res.json({ message: "Payroll generated", result });
+  res.json({
+    message: "Payroll generated",
+    count: generated.length,
+    result: generated
+  });
 };
 
-/* Get payslip */
 export const getPayslip = async (req, res) => {
-  const { id, month } = req.params;
-  const payroll = await Payroll.findOne({ employee: id, month }).populate("employee");
+  const { month } = req.params;
+
+  const emp = await Employee.findOne({ user: req.user._id });
+  if (!emp) return res.status(404).json({ message: "Employee not found" });
+
+  console.log("Searching for - Employee ID:", emp._id.toString(), "Month:", month);
+
+  const payroll = await Payroll.findOne({
+    employee: emp._id,
+    month: month.trim() // Remove any whitespace
+  }).populate("employee");
+
+  console.log("Query result:", payroll);
+
+  if (!payroll) {
+    // Debug
+    const allPayrolls = await Payroll.find({ employee: emp._id });
+    console.log("All payrolls for employee:", allPayrolls);
+    
+    return res.status(404).json({ 
+      message: "Payslip not found",
+      searchedMonth: month,
+      employeePayrolls: allPayrolls.map(p => p.month)
+    });
+  }
+
   res.json(payroll);
 };

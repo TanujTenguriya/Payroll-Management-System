@@ -8,7 +8,7 @@ const attendanceSchema = new mongoose.Schema({
   },
   month: {
     type: String,
-    required: true   // "2025-03"
+    required: true   
   },
   workingDays: {
     type: Number,

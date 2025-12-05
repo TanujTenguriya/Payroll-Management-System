@@ -10,15 +10,12 @@ connectDB();
 
 const app = express();
 
-// middleware
 app.use(cors());
 app.use(express.json());
 
-// routes
-app.use("/api", routes);
+app.use("/api", routes); 
 
-// error handlers (LAST)
-app.use(notFound);
+app.use(notFound);       
 app.use(errorHandler);
 
 export default app;

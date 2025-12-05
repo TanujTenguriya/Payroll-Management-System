@@ -10,8 +10,6 @@ const router = express.Router();
 
 // Generate payroll for a whole month
 router.post("/generate/:month", protect, adminOrAccountant, generatePayroll);
-
-// Fetch payslip
-router.get("/:id/:month", protect, getPayslip);
+router.get("/my/:month", protect, getPayslip);
 
 export default router;
